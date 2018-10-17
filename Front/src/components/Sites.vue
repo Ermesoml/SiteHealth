@@ -53,12 +53,13 @@ export default {
       sites: [],
       newSite: '',
       interval: 1,
+      api: 'https://site-health.herokuapp.com'
     }
   },
   filters: {
      intToDate(date){
       
-      return date ? moment(date).locale('pt-br').format('LLL') : '';
+      return date ? moment(date).locale('pt-br').format('MMMM Do YYYY, h:mm:ss a') : '';
     },
     convertStatus(status){
       switch (status) {
@@ -90,20 +91,20 @@ export default {
     getSites(){
       this.loading = true;
       this.interval = 60;
-      this.$http.get('http://localhost:3333/sites/').then(res => {
+      this.$http.get(`${this.api}/sites/`).then(res => {
         this.sites = res.data;
         this.loading = false;
       }).catch((error) => console.log(JSON.stringify(error)));
     },
     addSite(){
-      this.$http.post('http://localhost:3333/sites/add', {address: this.newSite}).then(res => {
+      this.$http.post(`${this.api}/sites/add`, {address: this.newSite}).then(res => {
         this.clearFields();
         this.getSites();
       }).catch((error) => console.log(JSON.stringify(error)));
     },
     deleteSite(site){
       console.log(site.id)
-      this.$http.post('http://localhost:3333/sites/del', {id: site.id}).then(res => {
+      this.$http.post(`${this.api}/sites/del`, {id: site.id}).then(res => {
         this.getSites();
       }).catch((error) => console.log(JSON.stringify(error)));
     }

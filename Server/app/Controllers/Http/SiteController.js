@@ -3,7 +3,37 @@
 const Site = use('App/Models/Site')
 const Database = use('Database')
 
+/*
+|--------------------------------------------------------------------------
+| Run Scheduler
+|--------------------------------------------------------------------------
+|
+| Run the scheduler on boot of the web sever.
+|
+*/
+const Scheduler = use('Adonis/Addons/Scheduler')
+var schedule = require('node-schedule')
+
 class SiteController {
+  async setStartScheduler({}){
+    Scheduler.run();
+    
+    return {created: true}
+  }
+
+  async getStartedSchedulers({}){
+    return {scheduler: schedule.scheduledJobs}
+  }
+
+  async setStopSchedule({}){
+    let keys = Object.keys(schedule.scheduledJobs);
+    for (let i = 0; i < keys.length; i++) {
+      schedule.scheduledJobs[keys[i]].cancel();
+    }
+
+    return {stopped: true}
+  }
+  
   async getSites({}){
     try{
       const sites = await Site.query().fetch();

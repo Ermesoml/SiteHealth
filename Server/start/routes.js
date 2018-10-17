@@ -23,3 +23,6 @@ Route.get('/', () => {
 Route.get('/sites', 'SiteController.getSites');
 Route.post('/sites/add', 'SiteController.postAddSite');
 Route.post('/sites/del', 'SiteController.postDeleteSite');
+Route.get('/sites/startScheduler', 'SiteController.setStartScheduler');
+Route.get('/sites/startedSchedulers', 'SiteController.getStartedSchedulers');
+Route.get('/sites/stopSchedulers', 'SiteController.setStopSchedule');

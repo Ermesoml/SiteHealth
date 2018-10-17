@@ -8,7 +8,7 @@ class SitesSchema extends Schema {
       table.increments()
       table.string('address', 255).notNullable()
       table.integer('interval').unsigned().notNullable()
-      table.date('last_check')
+      table.datetime('last_check')
       table.string('status', 1).default('U')
       table.timestamps()
     })
